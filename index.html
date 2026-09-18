@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Controle de Frota · BID 2026 DELUNA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
@@ -94,7 +94,7 @@
   .search-box{
     display:flex;align-items:center;gap:8px;
     background:var(--panel-2); border:1px solid var(--border);
-    border-radius:var(--radius); padding:7px 11px; width:230px;
+    border-radius:var(--radius); padding:7px 11px; width:220px;
   }
   .search-box svg{flex:none; opacity:.55; color:var(--text-muted);}
   .search-box input{
@@ -114,6 +114,12 @@
   .btn:hover{ border-color:var(--brand); background:var(--accent-soft); }
   .btn.primary{ background:var(--brand); color:#fff; border-color:var(--brand); }
   .btn.primary:hover{ background:var(--brand-dim); border-color:var(--brand-dim); }
+  .btn.admin-nav{
+    background: #01362E; color: #fff; border-color: #01362E;
+  }
+  .btn.admin-nav:hover{
+    background: #0E6B57; border-color: #0E6B57;
+  }
   .btn svg{flex:none;}
 
   .updated{
@@ -124,6 +130,7 @@
   /* NAV TABS */
   .nav-tabs{
     display:flex; gap:8px; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:12px;
+    flex-wrap:wrap;
   }
   .tab-btn{
     background:#fff; border:1px solid var(--border); border-radius:var(--radius);
@@ -135,6 +142,12 @@
   .tab-btn.active{
     background:var(--brand); color:#fff; border-color:var(--brand);
     box-shadow:0 2px 4px rgba(14,107,87,.2);
+  }
+  .tab-btn.admin-tab{
+    border-color: #01362E; color: #01362E; background: #EEF3F1;
+  }
+  .tab-btn.admin-tab.active{
+    background: #01362E; color: #fff; border-color: #01362E;
   }
   .tab-badge{
     font-family:'JetBrains Mono'; font-size:11px; padding:2px 7px; border-radius:12px;
@@ -216,7 +229,7 @@
   .kpi .val{ font-family:'JetBrains Mono'; font-weight:700; font-size:30px; line-height:1; color:var(--kc,var(--text)); }
   .kpi .sub{ font-size:11px; color:var(--text-dim); margin-top:6px; font-family:'JetBrains Mono'; }
 
-  /* WORKFLOW FLOWCHART BANNER */
+  /* FLOW BANNER */
   .flow-card{
     background:#fff; border:1px solid var(--border); border-radius:var(--radius);
     padding:16px 20px; margin-bottom:22px; box-shadow:0 1px 2px rgba(1,54,46,.04);
@@ -297,7 +310,7 @@
   }
   .status-pill .dot{width:6px;height:6px;border-radius:50%;}
 
-  /* CHECKLIST BADGES */
+  /* BADGES */
   .badge-step{
     display:inline-flex; align-items:center; justify-content:center;
     padding:3px 8px; border-radius:3px; font-family:'JetBrains Mono';
@@ -325,6 +338,51 @@
     padding:10px 14px; font-size:11.5px; color:var(--text-dim); border-top:1px solid var(--border);
   }
 
+  /* ADMIN TAB STYLES */
+  .admin-card{
+    background:#fff; border:1px solid var(--border); border-radius:var(--radius);
+    padding:24px 28px; box-shadow:0 1px 3px rgba(1,54,46,.05); max-width:850px; margin:0 auto 30px;
+  }
+  .admin-head{
+    border-bottom:1px solid var(--border); padding-bottom:14px; margin-bottom:20px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .admin-head h2{
+    margin:0; font-family:'Barlow Condensed'; font-size:22px; color:var(--brand-dark);
+  }
+  .form-row{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;
+  }
+  .form-group{ display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+  .form-group label{ font-size:12.5px; font-weight:600; color:var(--text); }
+  .form-control{
+    padding:9px 12px; border:1px solid var(--border); border-radius:var(--radius);
+    font-family:'Barlow'; font-size:13.5px; color:var(--text); background:#fff;
+    outline:none; transition:border-color .15s;
+  }
+  .form-control:focus{ border-color:var(--brand); }
+  .checklist-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;
+    background:var(--panel-2); padding:16px; border-radius:var(--radius); border:1px solid var(--border);
+    margin-bottom:20px;
+  }
+  .check-item{
+    display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; cursor:pointer;
+  }
+  .check-item input{
+    width:16px; height:16px; accent-color:var(--brand); cursor:pointer;
+  }
+  .apto-preview{
+    padding:12px 16px; border-radius:var(--radius); font-size:13.5px; font-weight:600;
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;
+  }
+  .apto-preview.sim{
+    background:var(--green-soft); color:var(--green); border:1px solid rgba(18,128,100,.3);
+  }
+  .apto-preview.nao{
+    background:var(--red-soft); color:var(--red); border:1px solid rgba(181,68,58,.3);
+  }
+
   /* MODAL */
   .modal-overlay{
     position:fixed; inset:0; background:rgba(4,20,16,.55); backdrop-filter:blur(2px);
@@ -346,16 +404,6 @@
   .modal-close:hover{ color:var(--text); }
   .modal-body{ padding:18px 20px; }
   .modal-body p{ font-size:12.5px; color:var(--text-muted); line-height:1.6; margin:0 0 12px; }
-  .modal-body code{
-    background:var(--panel-2); padding:1px 5px; border-radius:2px; font-family:'JetBrains Mono'; font-size:11.5px; color:var(--brand);
-  }
-  .col-list{
-    display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;
-  }
-  .col-tag{
-    font-family:'JetBrains Mono'; font-size:10.5px; background:var(--panel-2); border:1px solid var(--border);
-    padding:3px 7px; border-radius:2px; color:var(--text-muted);
-  }
   .drop-zone{
     border:1.5px dashed var(--border); border-radius:4px; padding:26px 16px; text-align:center;
     color:var(--text-dim); font-size:12.5px; cursor:pointer; margin-bottom:12px;
@@ -374,6 +422,8 @@
     .kpi-strip{ grid-template-columns:repeat(2,1fr); }
     .kpi-strip-arrival{ grid-template-columns:1fr; }
     .grid-2{ grid-template-columns:1fr; }
+    .checklist-grid{ grid-template-columns:1fr 1fr; }
+    .form-row{ grid-template-columns:1fr; }
     aside{
       position:fixed; left:-260px; top:0; bottom:0; z-index:60; background:var(--bg);
       transition:left .2s; height:100vh; top:0; padding-top:70px; box-shadow:10px 0 30px rgba(1,20,16,.25);
@@ -385,14 +435,6 @@
     .updated{ display:none; }
     main{ padding:16px; }
     .brand-watermark{ display:none; }
-    .brand{ gap:8px; }
-    .brand-logo{ height:26px; }
-    .brand-divider{ display:none; }
-    .brand-text p{ display:none; }
-    .brand-text h1{ font-size:15px; }
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{ transition:none !important; }
   }
 </style>
 </head>
@@ -416,13 +458,13 @@
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" id="searchInput" placeholder="Buscar placa, SVC, modelo...">
   </div>
-  <button class="btn" id="syncNowBtn" title="Recarregar dados do arquivo publicado">
+  <button class="btn" id="syncNowBtn" title="Recarregar dados originais">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-    <span id="syncBtnLabel">Recarregar</span>
+    <span id="syncBtnLabel">Sincronizar</span>
   </button>
-  <button class="btn primary" id="openImport">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-    Atualizar base
+  <button class="btn admin-nav" id="btnOpenAdminTab">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    Área do Administrador
   </button>
   <div class="updated">
     Atualizado em <b id="updatedDate">—</b> <span id="sourceLabel"></span><br>
@@ -437,7 +479,7 @@
       <div id="statusChips"></div>
     </div>
     <div class="filter-group" id="filterAptoGroup">
-      <div class="filter-title">Prontidão (Carros Chegados) <span class="filter-clear" data-clear="apto">limpar</span></div>
+      <div class="filter-title">Prontidão (Chegados) <span class="filter-clear" data-clear="apto">limpar</span></div>
       <div id="aptoChips"></div>
     </div>
     <div class="filter-group">
@@ -462,6 +504,10 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         Carros que Já Chegaram · Checklist & Prontidão
         <span class="tab-badge" id="badgeTotalChegados" style="background:#128064; color:#fff;">0</span>
+      </button>
+      <button class="tab-btn admin-tab" id="tabBtnAdmin" data-tab="tabAdmin">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10h-10V2z"/></svg>
+        Painel do Administrador
       </button>
     </div>
 
@@ -513,7 +559,6 @@
 
     <!-- TAB 2: CARROS QUE JÁ CHEGARAM (CHECKLIST & PRONTIDÃO) -->
     <div class="tab-content" id="tabChegados">
-      <!-- Workflow Sequence Indicator -->
       <div class="flow-card">
         <div class="flow-title">Fluxo obrigatório de regularização pós-chegada:</div>
         <div class="flow-steps">
@@ -533,7 +578,6 @@
         </div>
       </div>
 
-      <!-- KPIs da Aba de Chegados -->
       <div class="kpi-strip-arrival" id="kpiArrivalStrip"></div>
 
       <div class="section-label">Controle de Etapas por Placa (Veículos Entregues) <span class="hint" id="arrivalTableHint"></span></div>
@@ -551,66 +595,150 @@
       </div>
     </div>
 
+    <!-- TAB 3: PAINEL DO ADMINISTRADOR -->
+    <div class="tab-content" id="tabAdmin">
+      <!-- BLOCO DE LOGIN -->
+      <div class="admin-card" id="adminLoginBlock" style="max-width:440px;">
+        <div class="admin-head">
+          <h2>Acesso ao Painel do Administrador</h2>
+        </div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
+          Informe suas credenciais para registrar novas chegadas e atualizar as etapas dos veículos diretamente.
+        </p>
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="adminUser">Usuário</label>
+            <input type="text" id="adminUser" class="form-control" placeholder="Usuário" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="adminPass">Senha</label>
+            <input type="password" id="adminPass" class="form-control" placeholder="Senha" required autocomplete="current-password">
+          </div>
+          <div id="loginError" style="color:var(--red); font-size:12px; margin-bottom:12px; display:none;">
+            Usuário ou senha incorretos.
+          </div>
+          <button type="submit" class="btn primary" style="width:100%; justify-content:center; padding:10px;">
+            Entrar no Painel
+          </button>
+        </form>
+      </div>
+
+      <!-- BLOCO DO FORMULÁRIO DE CADASTRO/ATUALIZAÇÃO (SÓ APARECE LOGADO) -->
+      <div class="admin-card" id="adminPanelBlock" style="display:none;">
+        <div class="admin-head">
+          <div>
+            <h2>Cadastro / Regularização de Veículos Chegados</h2>
+            <span style="font-size:12px; color:var(--text-dim);">Sessão autenticada como Administrador da Frota</span>
+          </div>
+          <button class="btn" id="btnAdminLogout" style="font-size:11.5px; padding:5px 10px;">Sair</button>
+        </div>
+
+        <form id="formAddVeiculo">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regPlaca">Placa do Veículo *</label>
+              <input type="text" id="regPlaca" class="form-control mono" placeholder="Ex: ABC1D23" style="text-transform:uppercase;" required>
+            </div>
+            <div class="form-group">
+              <label for="regDataChegada">Data Exata de Chegada *</label>
+              <input type="date" id="regDataChegada" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regBase">Base / Service (SVC) *</label>
+              <select id="regBase" class="form-control" required>
+                <option value="">Selecione a Base...</option>
+                <option value="SRJ10 - RJ Taquara (Barra)">SRJ10 - RJ Taquara (Barra)</option>
+                <option value="SRJ1 - RJ Cordovil (Rio de Janeiro)">SRJ1 - RJ Cordovil (Rio de Janeiro)</option>
+                <option value="SRJ4 - Campos dos Goytacazes">SRJ4 - Campos dos Goytacazes</option>
+                <option value="SRJ5 - Petrópolis">SRJ5 - Petrópolis</option>
+                <option value="SRJ7 - Macaé">SRJ7 - Macaé</option>
+                <option value="SRJ8 - Itaboraí (Niterói)">SRJ8 - Itaboraí (Niterói)</option>
+                <option value="SRJ9 - São Pedro da Aldeia (Cabo Frio)">SRJ9 - São Pedro da Aldeia (Cabo Frio)</option>
+                <option value="SES1 - Serra (Vitória)">SES1 - Serra (Vitória)</option>
+                <option value="SES2 - Cachoeiro do Itapemirim">SES2 - Cachoeiro do Itapemirim</option>
+                <option value="SMG3 - Pouso Alegre">SMG3 - Pouso Alegre</option>
+                <option value="SMG14 - Nova Lima">SMG14 - Nova Lima</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="regLocadora">Locadora</label>
+              <select id="regLocadora" class="form-control">
+                <option value="Deluna">Deluna</option>
+                <option value="Vamos">Vamos</option>
+                <option value="Localiza">Localiza</option>
+                <option value="LM">LM</option>
+                <option value="TKS">TKS</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="regModal">Modal</label>
+              <select id="regModal" class="form-control">
+                <option value="Van">Van</option>
+                <option value="Utilitário">Utilitário</option>
+                <option value="Vuc">Vuc</option>
+                <option value="Vuc Dedicado">Vuc Dedicado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="regModelo">Modelo do Veículo</label>
+              <input type="text" id="regModelo" class="form-control" placeholder="Ex: Sprinter 317, Fiorino, Ducato...">
+            </div>
+          </div>
+
+          <div class="section-label" style="margin-top:14px;">Passo a Passo de Regularização (Marque as concluídas)</div>
+          <div class="checklist-grid">
+            <label class="check-item">
+              <input type="checkbox" id="chkCRLV"> 1. CRLV
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkArrendamento"> 2. Contrato Arrendamento
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkANTT"> 3. Inclusão na ANTT
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkGRML"> 4. GR e Cadastro ML
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkComodato"> 5. Contrato Comodato
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkVeloe"> 6. Cartão Veloe
+            </label>
+          </div>
+
+          <div class="apto-preview nao" id="aptoLivePreview">
+            <span>Status calculado: <strong id="aptoLiveText">NÃO ESTÁ APTO (0/6 etapas)</strong></span>
+            <span style="font-size:12px;">Preencha todas para ficar apto a rodar</span>
+          </div>
+
+          <div style="display:flex; gap:12px; align-items:center;">
+            <button type="submit" class="btn primary" style="padding:11px 22px; font-size:14px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Salvar e Atualizar Painel
+            </button>
+            <span id="saveStatusMsg" style="font-size:13px; font-weight:600; color:var(--green); display:none;">
+              Veículo gravado com sucesso!
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 </div>
+
 <footer class="brand-bar-bottom">DeLuna · Soluções em Transportes e Logística<span class="credit">Produzido por: Alexsander Miranda</span></footer>
 
-<div class="modal-overlay" id="importOverlay">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Atualizar base de veículos</h3>
-      <button class="modal-close" id="closeImport">&times;</button>
-    </div>
-    <div class="modal-body">
-      <p><b style="color:var(--text);">Como este painel é publicado como arquivo estático</b>, ele lê os dados de um arquivo <code>data.xlsx</code> (ou <code>data.csv</code>) publicado na <b>mesma pasta</b> do <code>index.html</code>, no seu host (Netlify, GitHub Pages, etc). Não há login nem planilha externa envolvida.</p>
-      <div class="col-list" style="margin-bottom:4px; display:block;">
-        <p style="margin:0 0 6px;"><b>Para atualizar o painel para todo mundo que acessa o link:</b></p>
-        <ol style="margin:0 0 10px; padding-left:18px; color:var(--text-muted); font-size:12.5px; line-height:1.7;">
-          <li>Edite normalmente a sua planilha <code>Placas_BID2026</code></li>
-          <li>Salve/exporte ela como <code>data.xlsx</code> (ou <code>data.csv</code>)</li>
-          <li>Envie esse arquivo para a pasta do site no seu host, substituindo o antigo (mesmo nome)</li>
-          <li>Pronto — quem abrir o link já vê os dados novos automaticamente</li>
-        </ol>
-      </div>
-      <p style="margin-bottom:4px;"><b>Colunas suportadas</b> no <code>data.xlsx</code>/<code>data.csv</code>:</p>
-      <div class="col-list">
-        <span class="col-tag">Placa</span>
-        <span class="col-tag">CRLV</span>
-        <span class="col-tag">Contrato de Arrendamento</span>
-        <span class="col-tag">Inclusão na ANTT</span>
-        <span class="col-tag">GR e Cadastro Mercado Livre</span>
-        <span class="col-tag">Contrato de Comodato</span>
-        <span class="col-tag">Cartão Veloe</span>
-        <span class="col-tag">SVC Implantação</span>
-        <span class="col-tag">Regional</span>
-        <span class="col-tag">Modal</span>
-        <span class="col-tag">Locadora</span>
-        <span class="col-tag">Modelo</span>
-        <span class="col-tag">Cronograma Planejamento</span>
-        <span class="col-tag">Previsão Final Entrega</span>
-        <span class="col-tag">Entregue</span>
-      </div>
-      <p style="margin-top:-6px;">Datas em <code>DD/MM/AAAA</code>, <code>AAAA-MM-DD</code> ou datas nativas da planilha. Deixe <code>Entregue</code> em branco enquanto o veículo não chegou. Nas colunas de etapas, insira <code>Ok</code> para as etapas concluídas.</p>
-
-      <div class="filter-title" style="border-top:1px solid var(--border); padding-top:14px; margin-top:10px;">Testar um arquivo agora (só na sua tela)</div>
-      <p>Solte aqui um <code>.xlsx</code> ou <code>.csv</code> para conferir como o painel ficaria — isso atualiza <b>apenas a visualização no seu navegador</b>, não publica nada para os outros.</p>
-      <div class="drop-zone" id="dropZone">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Solte o arquivo .xlsx ou .csv aqui, ou clique para escolher
-      </div>
-      <input type="file" id="fileInput" accept=".csv,.txt,.xlsx,.xls" style="display:none;">
-      <div class="import-status" id="importStatus"></div>
-      <div class="modal-actions">
-        <button class="btn" id="resetSample">Recarregar dados publicados (data.xlsx/data.csv)</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-// Dados publicados carregados da base data.xlsx
+// Dados nativos da planilha base
 const SNAPSHOT = [{"placa": "TUG6J79", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TUG6J80", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TUG6J81", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TUF6J99", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES1 - Serra (Vitória)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TUF6J98", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES1 - Serra (Vitória)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TUF6J97", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES1 - Serra (Vitória)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TUE6J97", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES1 - Serra (Vitória)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TUG6J78", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES1 - Serra (Vitória)", "regional": "RJ/ES", "modal": "Vuc Dedicado", "locadora": "Deluna", "modelo": "SPRINTER 317", "cronograma": "Abril", "previsao": null, "entregue": "2026-04-27"}, {"placa": "TZI6A44", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "JUMPER CARGOL3H2 13m³ 2.2 MEC DIESEL", "cronograma": "Maio", "previsao": "2026-05-29", "entregue": "2026-05-29"}, {"placa": "TZI6A49", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "JUMPER CARGOL3H2 13m³ 2.2 MEC DIESEL", "cronograma": "Maio", "previsao": "2026-05-29", "entregue": "2026-05-29"}, {"placa": "TZQ7B50", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Vamos", "modelo": "FIORINO ENDURANCE 1.3 FLEX 002 PASSAGEIROS", "cronograma": "Junho", "previsao": "2026-07-04", "entregue": "2026-07-03"}, {"placa": "TZK7G86", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "-", "entregue": "2026-06-29"}, {"placa": "TZK7G88", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "-", "entregue": "2026-06-29"}, {"placa": "TZK7G89", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "-", "entregue": "2026-07-01"}, {"placa": "TZK7G92", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "-", "entregue": "2026-06-29"}, {"placa": "TZK7G93", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "-", "entregue": "2026-06-29"}, {"placa": "TZK7G95", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "-", "entregue": "2026-06-29"}, {"placa": "TZK7G96", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "2026-07-08", "entregue": "2026-07-08"}, {"placa": "TZK7H02", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "-", "entregue": "2026-06-29"}, {"placa": "TZK7H03", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SMG14 - Nova Lima", "regional": "MG", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "-", "entregue": "2026-06-29"}, {"placa": "TZK7G04", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7G05", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7G07", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-16", "entregue": "2026-06-12"}, {"placa": "TZK7G09", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-16", "entregue": "2026-06-12"}, {"placa": "TZK7G10", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-16", "entregue": "2026-06-12"}, {"placa": "TZK7G21", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-16", "entregue": "2026-06-12"}, {"placa": "TZK7G22", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7G23", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7G25", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-16", "entregue": "2026-06-12"}, {"placa": "TZK7G30", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-16", "entregue": "2026-06-12"}, {"placa": "TZK7G32", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7G41", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7G42", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7G43", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZM0A63", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Julho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZN9E41", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-07-06", "entregue": "2026-07-06"}, {"placa": "TZN9E67", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-07-08", "entregue": "2026-07-08"}, {"placa": "TZN9E59", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-07-06", "entregue": "2026-07-06"}, {"placa": "TZN9E40", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-07-07", "entregue": "2026-07-06"}, {"placa": "TZN9E53", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "-", "entregue": "2026-07-02"}, {"placa": "TZN9E46", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-07-06", "entregue": "2026-07-06"}, {"placa": "TZN9E61", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-07-06", "entregue": "2026-07-06"}, {"placa": "TZN9E54", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "-", "entregue": "2026-07-02"}, {"placa": "TZN9E60", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-07-08", "entregue": "2026-07-08"}, {"placa": "TZN9E51", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-07-08", "entregue": "2026-07-08"}, {"placa": "TZN9E44", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-07-08", "entregue": "2026-07-08"}, {"placa": "TZN9E56", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "-", "entregue": "2026-07-02"}, {"placa": "TZN9E66", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-07-14", "entregue": "2026-07-15"}, {"placa": "TZK0E28", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7F76", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7F79", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7F80", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-18", "entregue": "2026-06-18"}, {"placa": "TZK7F81", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-18", "entregue": "2026-06-18"}, {"placa": "TZK7F83", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7F85", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-18", "entregue": "2026-06-18"}, {"placa": "TZK7F87", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-18", "entregue": "2026-06-18"}, {"placa": "TZK7F88", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Maio", "previsao": "2026-06-20", "entregue": "2026-06-20"}, {"placa": "TZK7F90", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZK7F91", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-18", "entregue": "2026-06-18"}, {"placa": "TZK7G13", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TZM0A64", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Localiza", "modelo": "Fiorino ENDURANCE FLEX 1.3 2P", "cronograma": "Junho", "previsao": "2026-06-17", "entregue": "2026-06-17"}, {"placa": "TLQ1J14", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Maio", "previsao": "2026-05-29", "entregue": "2026-05-29"}, {"placa": "TZI0C46", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "Daily 35-160 CS EE 3750", "cronograma": "Maio", "previsao": "2026-05-29", "entregue": "2026-05-29"}, {"placa": "QSW6D63", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Maio", "previsao": "2026-05-29", "entregue": "2026-05-29"}, {"placa": "QSR8G51", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Maio", "previsao": "2026-05-28", "entregue": "2026-05-28"}, {"placa": "TJV0G47", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ1 - RJ Cordovil (Rio de Janeiro)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Maio", "previsao": "2026-05-29", "entregue": "2026-05-29"}, {"placa": "TZI2C82", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "Daily 35-160 CS EE 3750", "cronograma": "Maio", "previsao": "2026-05-12", "entregue": "2026-05-12"}, {"placa": "TZI2D97", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "Daily 35-160 CS EE 3750", "cronograma": "Maio", "previsao": "2026-05-12", "entregue": "2026-05-12"}, {"placa": "TZI3I10", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "Daily 35-160 CS EE 3750", "cronograma": "Maio", "previsao": "2026-05-12", "entregue": "2026-05-12"}, {"placa": "TZI3I07", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "Daily 35-160 CS EE 3750", "cronograma": "Maio", "previsao": "2026-05-12", "entregue": "2026-05-12"}, {"placa": "TZI3I17", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "Daily 35-160 CS EE 3750", "cronograma": "Maio", "previsao": "2026-05-12", "entregue": "2026-05-12"}, {"placa": "UCM5A93", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-19", "entregue": "2026-08-19"}, {"placa": "UCM7F91", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-21", "entregue": "2026-08-21"}, {"placa": "UCM7F89", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-21", "entregue": "2026-08-21"}, {"placa": "UCN5H71", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-27", "entregue": "2026-08-27"}, {"placa": "UCN5H68", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-27", "entregue": "2026-08-27"}, {"placa": "UCM6G40", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-20", "entregue": "2026-08-20"}, {"placa": "UCN5J01", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-27", "entregue": "2026-08-27"}, {"placa": "UCN5I92", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-09-04", "entregue": "2026-09-04"}, {"placa": "UCN5I89", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-27", "entregue": "2026-08-27"}, {"placa": "UCO0B60", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-08-28", "entregue": "2026-08-28"}, {"placa": "UDC6J75", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-06-12", "entregue": "2026-06-12"}, {"placa": "UFI2I06", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-06-09", "entregue": "2026-06-08"}, {"placa": "TZO8I81", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "Daily 35-160 CS EE 3750", "cronograma": "Junho", "previsao": "2026-06-12", "entregue": "2026-06-10"}, {"placa": "UDL1B21", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Junho", "previsao": "2026-05-06", "entregue": "2026-06-03"}, {"placa": "UCN5I81", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SES2 - Cachoeiro do Itapemirim", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Julho", "previsao": "2026-08-27", "entregue": "2026-08-27"}, {"placa": "UCM6C20", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Vuc", "locadora": "LM", "modelo": "VW Delivery Express - 4x2 - 3.600mm", "cronograma": "Julho", "previsao": "2026-08-20", "entregue": "2026-08-20"}, {"placa": "UDD2F67", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-06-26", "entregue": "2026-06-26"}, {"placa": "UGQ5E06", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-06-26", "entregue": "2026-06-26"}, {"placa": "UGE6I11", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-06-11", "entregue": "2026-06-11"}, {"placa": "EKP2A86", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-06-03", "entregue": "2026-06-03"}, {"placa": "UFY3A87", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-07-15", "entregue": "2026-07-15"}, {"placa": "UDJ5F85", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-07-15", "entregue": "2026-07-15"}, {"placa": "UGT4I35", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-07-15", "entregue": "2026-07-15"}, {"placa": "UFS2F07", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-07-15", "entregue": "2026-07-15"}, {"placa": "UGD7H04", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-07-15", "entregue": "2026-07-15"}, {"placa": "UFR5D56", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Maio", "previsao": "2026-07-15", "entregue": "2026-07-15"}, {"placa": "UCE5E77", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Agosto", "previsao": "2026-07-17", "entregue": "2026-07-24"}, {"placa": "UCE5B49", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Agosto", "previsao": "2026-07-17", "entregue": "2026-07-24"}, {"placa": "UCE5C45", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Agosto", "previsao": "2026-07-17", "entregue": "2026-07-27"}, {"placa": "UCM5J77", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-16", "entregue": null}, {"placa": "UCM5J76", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-11", "entregue": "2026-09-11"}, {"placa": "UCL8B30", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-11", "entregue": "2026-09-11"}, {"placa": "UCL7J83", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-11", "entregue": "2026-09-11"}, {"placa": "UCL8B44", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-11", "entregue": "2026-09-11"}, {"placa": "UCL8B10", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-11", "entregue": "2026-09-11"}, {"placa": "UCL7J84", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-11", "entregue": "2026-09-11"}, {"placa": "UCL8A66", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-11", "entregue": "2026-09-11"}, {"placa": "UCM5G87", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ10 - RJ Taquara (Barra)", "regional": "RJ/ES", "modal": "Van", "locadora": "TKS", "modelo": "DAILY 30VAN", "cronograma": "Setembro", "previsao": "2026-09-30", "entregue": null}, {"placa": "TZQ7B51", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Vamos", "modelo": "FIORINO ENDURANCE 1.3 FLEX 002 PASSAGEIROS", "cronograma": "Junho", "previsao": "2026-07-04", "entregue": "2026-07-03"}, {"placa": "XXX3539", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "TZQ7B52", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Vamos", "modelo": "FIORINO ENDURANCE 1.3 FLEX 002 PASSAGEIROS", "cronograma": "Julho", "previsao": "2026-07-04", "entregue": "2026-07-03"}, {"placa": "TZQ7B53", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Vamos", "modelo": "FIORINO ENDURANCE 1.3 FLEX 002 PASSAGEIROS", "cronograma": "Julho", "previsao": "2026-07-04", "entregue": "2026-07-03"}, {"placa": "TZV1E86", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Julho", "previsao": "2026-07-04", "entregue": "2026-07-01"}, {"placa": "TZV1E88", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Julho", "previsao": "2026-07-14", "entregue": "2026-07-11"}, {"placa": "TZV1E89", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Julho", "previsao": "2026-07-04", "entregue": "2026-07-01"}, {"placa": "TZV1E97", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Julho", "previsao": "2026-07-04", "entregue": "2026-07-01"}, {"placa": "TZV1E99", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Julho", "previsao": "2026-07-04", "entregue": "2026-07-01"}, {"placa": "TZV1F01", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Julho", "previsao": "2026-07-04", "entregue": "2026-07-01"}, {"placa": "UAE9E74", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-15", "entregue": null}, {"placa": "UVL9F73", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-15", "entregue": "2026-09-12"}, {"placa": "UVL9F72", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-15", "entregue": null}, {"placa": "UVL9F77", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-15", "entregue": null}, {"placa": "UVL9F75", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-15", "entregue": null}, {"placa": "UVL9F71", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ4 - Campos dos Goytacazes", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-15", "entregue": null}, {"placa": "TZP6B28", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Utilitário", "locadora": "Vamos", "modelo": "FIORINO ENDURANCE 1.3 FLEX 002 PASSAGEIROS", "cronograma": "Agosto", "previsao": "2026-07-12", "entregue": "2026-07-09"}, {"placa": "TZV1F05", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "DUCATO MAXCARGO 13m³ 2.2 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-07-04", "entregue": "2026-07-01"}, {"placa": "UVN4F28", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-25", "entregue": null}, {"placa": "UVN4F21", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Agosto", "previsao": "2026-09-25", "entregue": null}, {"placa": "XXX4655", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ5 - Petrópolis", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4656", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ5 - Petrópolis", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4657", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ5 - Petrópolis", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4658", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ5 - Petrópolis", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4659", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ5 - Petrópolis", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4660", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ5 - Petrópolis", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4661", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ5 - Petrópolis", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4699", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4700", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4701", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4702", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4703", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4704", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4705", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4706", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4707", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4708", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "XXX4709", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ7 - Macaé", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "UVQ6I66", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Setembro", "previsao": "2026-09-25", "entregue": null}, {"placa": "XXX4715", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Setembro", "previsao": null, "entregue": null}, {"placa": "UAE9E78", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-08-05", "entregue": "2026-08-01"}, {"placa": "UAF1F90", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-09-05", "entregue": "2026-08-29"}, {"placa": "UAF1F91", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-09-05", "entregue": "2026-08-29"}, {"placa": "UAE9E89", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-08-05", "entregue": "2026-08-01"}, {"placa": "UAG5E23", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-08-28", "entregue": "2026-08-27"}, {"placa": "UAG5E39", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-09-05", "entregue": "2026-08-27"}, {"placa": "UAG5E44", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-08-28", "entregue": "2026-08-22"}, {"placa": "UAG5E54", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-09-05", "entregue": "2026-08-28"}, {"placa": "UAG5E18", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SMG3 - Pouso Alegre", "regional": "MG", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-08-28", "entregue": "2026-08-27"}, {"placa": "UVN4F22", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-09-15", "entregue": null}, {"placa": "UVN4F19", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-09-15", "entregue": null}, {"placa": "UVN4F23", "crlv": "Ok", "arrendamento": "Ok", "antt": "Ok", "gr_ml": "Ok", "comodato": "Ok", "veloe": "Ok", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "MASTER EXTRA FURGAO L3H2 13M³ 2.3 MEC DIESEL", "cronograma": "Outubro", "previsao": "2026-09-15", "entregue": null}, {"placa": "XXX5280", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5281", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5282", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5283", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5284", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5285", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ9 - São Pedro da Aldeia (Cabo Frio)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5315", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Julho", "previsao": null, "entregue": null}, {"placa": "XXX5316", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5317", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}, {"placa": "XXX5318", "crlv": "", "arrendamento": "", "antt": "", "gr_ml": "", "comodato": "", "veloe": "", "svc": "SRJ8 - Itaboraí (Niterói)", "regional": "RJ/ES", "modal": "Van", "locadora": "Vamos", "modelo": "", "cronograma": "Outubro", "previsao": null, "entregue": null}];
-const SNAPSHOT_DATE = "2026-09-16";
+const SNAPSHOT_DATE = "2026-09-18";
 
 const COLORS = {
   'Chegou':  { c:'var(--green)', hex:'#128064', soft:'var(--green-soft)' },
@@ -626,15 +754,6 @@ const BUCKET_DEFS = [
   {label:'+30 dias', lo:31, hi:Infinity, color:'#B5443A'},
 ];
 
-const STAGE_KEYS = [
-  { key: 'crlv', label: 'CRLV' },
-  { key: 'arrendamento', label: 'Arrendamento' },
-  { key: 'antt', label: 'ANTT' },
-  { key: 'gr_ml', label: 'GR & ML' },
-  { key: 'comodato', label: 'Comodato' },
-  { key: 'veloe', label: 'Cartão Veloe' },
-];
-
 let RAW = [];
 let state = {
   svc: new Set(), locadora: new Set(), status: new Set(), apto: new Set(),
@@ -647,7 +766,7 @@ function parseDate(v){
   if(!v) return null;
   if(v instanceof Date) return v;
   const s = String(v).trim();
-  if(!s) return null;
+  if(!s || s === '-') return null;
   let m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if(m) return new Date(+m[1], +m[2]-1, +m[3]);
   m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
@@ -679,7 +798,6 @@ function deriveRow(r){
     status = dias < 0 ? 'Atrasado' : 'A Chegar';
   }
 
-  // Checklist de etapas
   const crlvOk = String(r.crlv || '').trim().toLowerCase() === 'ok';
   const arrendamentoOk = String(r.arrendamento || '').trim().toLowerCase() === 'ok';
   const anttOk = String(r.antt || '').trim().toLowerCase() === 'ok';
@@ -708,16 +826,38 @@ function deriveRow(r){
   };
 }
 
-function loadData(rows, sourceLabel, dateLabel){
-  RAW = rows.map(deriveRow);
-  document.getElementById('updatedDate').textContent = dateLabel || new Date().toLocaleDateString('pt-BR');
+// Carregar dados mesclando base original + cadastros manuais do localStorage
+function getFullDataList(){
+  const localItems = JSON.parse(localStorage.getItem('frota_deluna_custom_veiculos') || '[]');
+  const localMap = new Map();
+  localItems.forEach(item => localMap.set(item.placa.toUpperCase(), item));
+
+  // Substitui ou anexa os itens da planilha
+  const merged = [];
+  const processedPlacas = new Set();
+
+  // Primeiro adiciona os itens do localStorage
+  localItems.forEach(item => {
+    merged.push(item);
+    processedPlacas.add(item.placa.toUpperCase());
+  });
+
+  // Em seguida adiciona os do snapshot que não foram sobrescritos
+  SNAPSHOT.forEach(item => {
+    if(!processedPlacas.has(item.placa.toUpperCase())){
+      merged.push(item);
+    }
+  });
+
+  return merged;
+}
+
+function loadData(){
+  const fullList = getFullDataList();
+  RAW = fullList.map(deriveRow);
+  document.getElementById('updatedDate').textContent = new Date().toLocaleDateString('pt-BR');
   document.getElementById('rowCount').textContent = RAW.length;
-  const srcEl = document.getElementById('sourceLabel');
-  if(srcEl){
-    const labels = { 'data.xlsx': '· data.xlsx', 'data.csv': '· data.csv', 'demo': '· base data.xlsx' };
-    srcEl.textContent = labels[sourceLabel] || (sourceLabel ? '· ' + sourceLabel : '');
-  }
-  state.svc = new Set(); state.locadora = new Set(); state.status = new Set(); state.apto = new Set();
+
   buildFilterLists();
   renderAll();
 }
@@ -744,12 +884,11 @@ function buildFilterLists(){
     statusWrap.appendChild(div);
   });
 
-  // Filtro de Aptidão (para a aba de chegados)
   const aptoWrap = document.getElementById('aptoChips');
   aptoWrap.innerHTML = '';
   const aptoOptions = [
     { label: 'Apto para rodar', val: 'sim', color: '#128064', cnt: RAW.filter(r=>r.status==='Chegou' && r.isApto).length },
-    { label: 'Não está apto (Pendente)', val: 'nao', color: '#B5443A', cnt: RAW.filter(r=>r.status==='Chegou' && !r.isApto).length }
+    { label: 'Não está apto', val: 'nao', color: '#B5443A', cnt: RAW.filter(r=>r.status==='Chegou' && !r.isApto).length }
   ];
   aptoOptions.forEach(opt=>{
     const div = document.createElement('div');
@@ -1016,7 +1155,6 @@ function renderTable(data){
   document.getElementById('tableHint').textContent = `${sorted.length} resultado${sorted.length===1?'':'s'}`;
 }
 
-// ---------------- CHECKLIST TABLE (ABA CARROS CHEGADOS) ----------------
 const ARRIVAL_TABLE_COLS = [
   {key:'placa', label:'Placa'},
   {key:'entregueDate', label:'Chegada'},
@@ -1093,11 +1231,9 @@ function renderAll(){
   const filtered = getFiltered();
   const arrived = filtered.filter(r=> r.status === 'Chegou');
 
-  // Badges nas abas
   document.getElementById('badgeTotalGeral').textContent = filtered.length;
   document.getElementById('badgeTotalChegados').textContent = arrived.length;
 
-  // Render tab 1
   renderKPIs(filtered);
   renderStatusChart('chartSvc', filtered, 'svc');
   renderStatusChart('chartLoc', filtered, 'locadora');
@@ -1105,30 +1241,177 @@ function renderAll(){
   renderTableHead();
   renderTable(filtered);
 
-  // Render tab 2
   renderArrivalKPIs(arrived);
   renderArrivalTable(arrived);
 }
 
-// ---------------- TAB SWITCHING ----------------
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    const targetTab = btn.dataset.tab;
-    document.querySelectorAll('.tab-btn').forEach(b=> b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c=> c.classList.remove('active'));
+// ---------------- ALTERNAÇÃO DE ABAS ----------------
+function switchTab(targetTab){
+  document.querySelectorAll('.tab-btn').forEach(b=> b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=> c.classList.remove('active'));
 
-    btn.classList.add('active');
-    document.getElementById(targetTab).classList.add('active');
-    state.activeTab = targetTab;
-  });
+  const activeBtn = document.querySelector(`[data-tab="${targetTab}"]`);
+  if(activeBtn) activeBtn.classList.add('active');
+  const activeContent = document.getElementById(targetTab);
+  if(activeContent) activeContent.classList.add('active');
+  state.activeTab = targetTab;
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=> switchTab(btn.dataset.tab));
 });
 
-// ---------------- search ----------------
+document.getElementById('btnOpenAdminTab').addEventListener('click', ()=>{
+  switchTab('tabAdmin');
+});
+
+// ---------------- AUTENTICAÇÃO E PAINEL ADMIN ----------------
+const ADMIN_USER = "frota";
+const ADMIN_PASS = "deluna2026";
+
+function checkAdminAuth(){
+  const isAuth = sessionStorage.getItem('admin_logged') === 'true';
+  if(isAuth){
+    document.getElementById('adminLoginBlock').style.display = 'none';
+    document.getElementById('adminPanelBlock').style.display = 'block';
+  } else {
+    document.getElementById('adminLoginBlock').style.display = 'block';
+    document.getElementById('adminPanelBlock').style.display = 'none';
+  }
+}
+
+document.getElementById('adminLoginForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value;
+  const err = document.getElementById('loginError');
+
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    sessionStorage.setItem('admin_logged', 'true');
+    err.style.display = 'none';
+    checkAdminAuth();
+  } else {
+    err.style.display = 'block';
+  }
+});
+
+document.getElementById('btnAdminLogout').addEventListener('click', ()=>{
+  sessionStorage.removeItem('admin_logged');
+  checkAdminAuth();
+});
+
+// Atualização dinâmica do selo de Apto no formulário
+function updateAptoPreview(){
+  const checks = [
+    document.getElementById('chkCRLV').checked,
+    document.getElementById('chkArrendamento').checked,
+    document.getElementById('chkANTT').checked,
+    document.getElementById('chkGRML').checked,
+    document.getElementById('chkComodato').checked,
+    document.getElementById('chkVeloe').checked
+  ];
+  const count = checks.filter(Boolean).length;
+  const prevBox = document.getElementById('aptoLivePreview');
+  const prevText = document.getElementById('aptoLiveText');
+
+  if(count === 6){
+    prevBox.className = 'apto-preview sim';
+    prevText.textContent = 'APTO PARA RODAR (6/6 etapas concluídas)';
+  } else {
+    prevBox.className = 'apto-preview nao';
+    prevText.textContent = `NÃO ESTÁ APTO (${count}/6 etapas concluídas)`;
+  }
+}
+
+['chkCRLV', 'chkArrendamento', 'chkANTT', 'chkGRML', 'chkComodato', 'chkVeloe'].forEach(id=>{
+  document.getElementById(id).addEventListener('change', updateAptoPreview);
+});
+
+// Ao digitar uma placa existente, preenche automaticamente os dados dela para facilitar a edição!
+document.getElementById('regPlaca').addEventListener('change', e=>{
+  const p = e.target.value.trim().toUpperCase();
+  const found = RAW.find(r => r.placa.toUpperCase() === p);
+  if(found){
+    if(found.entregue) document.getElementById('regDataChegada').value = found.entregue;
+    if(found.svc) document.getElementById('regBase').value = found.svc;
+    if(found.locadora) document.getElementById('regLocadora').value = found.locadora;
+    if(found.modal) document.getElementById('regModal').value = found.modal;
+    if(found.modelo) document.getElementById('regModelo').value = found.modelo;
+
+    document.getElementById('chkCRLV').checked = found.crlvOk;
+    document.getElementById('chkArrendamento').checked = found.arrendamentoOk;
+    document.getElementById('chkANTT').checked = found.anttOk;
+    document.getElementById('chkGRML').checked = found.grMlOk;
+    document.getElementById('chkComodato').checked = found.comodatoOk;
+    document.getElementById('chkVeloe').checked = found.veloeOk;
+    updateAptoPreview();
+  }
+});
+
+// Salvar novo veículo ou atualizar existente
+document.getElementById('formAddVeiculo').addEventListener('submit', e=>{
+  e.preventDefault();
+  const placa = document.getElementById('regPlaca').value.trim().toUpperCase();
+  const dataChegada = document.getElementById('regDataChegada').value;
+  const base = document.getElementById('regBase').value;
+  const locadora = document.getElementById('regLocadora').value;
+  const modal = document.getElementById('regModal').value;
+  const modelo = document.getElementById('regModelo').value.trim();
+
+  const crlv = document.getElementById('chkCRLV').checked ? 'Ok' : '';
+  const arrendamento = document.getElementById('chkArrendamento').checked ? 'Ok' : '';
+  const antt = document.getElementById('chkANTT').checked ? 'Ok' : '';
+  const gr_ml = document.getElementById('chkGRML').checked ? 'Ok' : '';
+  const comodato = document.getElementById('chkComodato').checked ? 'Ok' : '';
+  const veloe = document.getElementById('chkVeloe').checked ? 'Ok' : '';
+
+  const novoRegistro = {
+    placa,
+    crlv,
+    arrendamento,
+    antt,
+    gr_ml,
+    comodato,
+    veloe,
+    svc: base,
+    regional: base.includes('MG') ? 'MG' : 'RJ/ES',
+    modal,
+    locadora,
+    modelo,
+    cronograma: 'Cadastro Manual',
+    previsao: null,
+    entregue: dataChegada
+  };
+
+  // Salva no localStorage mantendo persistência
+  const localItems = JSON.parse(localStorage.getItem('frota_deluna_custom_veiculos') || '[]');
+  const idx = localItems.findIndex(x => x.placa.toUpperCase() === placa);
+  if(idx >= 0){
+    localItems[idx] = novoRegistro;
+  } else {
+    localItems.unshift(novoRegistro);
+  }
+  localStorage.setItem('frota_deluna_custom_veiculos', JSON.stringify(localItems));
+
+  // Recarrega o painel imediatamente
+  loadData();
+
+  // Mensagem de sucesso
+  const msg = document.getElementById('saveStatusMsg');
+  msg.style.display = 'inline';
+  setTimeout(()=>{ msg.style.display = 'none'; }, 4000);
+
+  // Redireciona para a aba de Carros Chegados para conferir
+  setTimeout(()=>{
+    switchTab('tabChegados');
+  }, 1000);
+});
+
+// ---------------- BUSCA E FILTROS ----------------
 document.getElementById('searchInput').addEventListener('input', e=>{
   state.search = e.target.value; renderAll();
 });
 
-// ---------------- clear filters ----------------
 document.querySelectorAll('.filter-clear').forEach(el=>{
   el.addEventListener('click', ()=>{
     const key = el.dataset.clear;
@@ -1140,7 +1423,6 @@ document.querySelectorAll('.filter-clear').forEach(el=>{
   });
 });
 
-// ---------------- bucket toggle ----------------
 document.querySelectorAll('[data-bucket-view]').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     state.bucketView = btn.dataset.bucketView;
@@ -1150,219 +1432,21 @@ document.querySelectorAll('[data-bucket-view]').forEach(btn=>{
   });
 });
 
-// ---------------- mobile filter drawer ----------------
 document.getElementById('mobileFilterBtn').addEventListener('click', ()=>{
   document.getElementById('sidebar').classList.toggle('open');
 });
 
-// ---------------- import modal ----------------
-const overlay = document.getElementById('importOverlay');
-document.getElementById('openImport').addEventListener('click', ()=> overlay.classList.add('open'));
-document.getElementById('closeImport').addEventListener('click', ()=> overlay.classList.remove('open'));
-overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.classList.remove('open'); });
-
-document.getElementById('resetSample').addEventListener('click', ()=>{
-  loadFromPublishedFile(true);
+document.getElementById('syncNowBtn').addEventListener('click', ()=>{
+  loadData();
+  alert('Dados sincronizados com sucesso!');
 });
 
-function showImportStatus(kind, msg){
-  const el = document.getElementById('importStatus');
-  el.className = 'import-status ' + kind;
-  el.textContent = msg;
-}
-
-function parseCSV(text){
-  const rows = [];
-  let row = [], field = '', inQuotes = false;
-  for(let i=0;i<text.length;i++){
-    const ch = text[i], next = text[i+1];
-    if(inQuotes){
-      if(ch === '"' && next === '"'){ field+='"'; i++; }
-      else if(ch === '"'){ inQuotes=false; }
-      else field += ch;
-    } else {
-      if(ch === '"') inQuotes = true;
-      else if(ch === ','){ row.push(field); field=''; }
-      else if(ch === '\n'){ row.push(field); rows.push(row); row=[]; field=''; }
-      else if(ch === '\r'){ /* skip */ }
-      else field += ch;
-    }
-  }
-  if(field.length || row.length){ row.push(field); rows.push(row); }
-  return rows.filter(r=> r.some(c=>c.trim()!==''));
-}
-
-const HEADER_MAP = {
-  'placa':'placa',
-  'chassi':'chassi',
-  'crlv':'crlv', 'crlv ':'crlv',
-  'contrato de arrendamento':'arrendamento', ' contrato de arrendamento':'arrendamento', 'arrendamento':'arrendamento',
-  'inclusão na antt':'antt', ' inclusão na antt':'antt', 'inclusao na antt':'antt', 'antt':'antt',
-  'gr e cadastro no mercado livre':'gr_ml', 'gr':'gr_ml', 'mercado livre':'gr_ml', 'cadastro mercado livre':'gr_ml',
-  'contrato de comodato':'comodato', ' contrato de comodato':'comodato', 'comodato':'comodato',
-  'cartão veloe':'veloe', 'cartao veloe':'veloe', 'cartão velo':'veloe', 'cartao velo':'veloe', 'veloe':'veloe',
-  'svc implantação':'svc', 'svc implantacao':'svc', 'svc':'svc', 'service':'svc',
-  'regional':'regional',
-  'modal':'modal',
-  'mlp':'mlp',
-  'locadora':'locadora',
-  'modelo':'modelo',
-  'cadastro como deveria ser':'cadastro',
-  'cronograma planejamento':'cronograma', 'cronograma':'cronograma',
-  'previsão final entrega':'previsao', 'previsao final entrega':'previsao', 'previsão':'previsao',
-  'entregue':'entregue',
-};
-
-function normalizeHeaderCell(v){
-  return String(v==null?'':v).replace(/\s+/g, ' ').trim().toLowerCase();
-}
-
-function findHeaderRowIndex(table, maxScan){
-  const limit = Math.min(maxScan || 8, table.length);
-  for(let i=0;i<limit;i++){
-    const row = (table[i] || []).map(normalizeHeaderCell);
-    if(row.includes('placa')) return i;
-  }
-  return 0;
-}
-
-function tableToRows(table){
-  if(!table || table.length < 2) throw new Error('Arquivo vazio ou sem cabeçalho.');
-  const headerIdx = findHeaderRowIndex(table);
-  const rawHeader = (table[headerIdx] || []).map(normalizeHeaderCell);
-  const mapped = rawHeader.map(h=> HEADER_MAP[h] || null);
-  if(!mapped.includes('placa')) throw new Error('Coluna "Placa" não encontrada no cabeçalho.');
-  const rows = [];
-  for(let i=headerIdx+1;i<table.length;i++){
-    const line = table[i] || [];
-    const obj = {};
-    mapped.forEach((key, idx)=>{ if(key) obj[key] = String(line[idx]==null?'':line[idx]).trim(); });
-    if(!obj.placa) continue;
-    rows.push(obj);
-  }
-  return rows;
-}
-
-function csvToRows(text){
-  return tableToRows(parseCSV(text));
-}
-
-function xlsxToRows(arrayBuffer){
-  if(typeof XLSX === 'undefined') throw new Error('Biblioteca XLSX não carregou (verifique sua conexão).');
-  const wb = XLSX.read(arrayBuffer, {type:'array', cellDates:true});
-  const wanted = wb.SheetNames.find(n => n.trim().toLowerCase() === 'placas_bid2026')
-    || wb.SheetNames.find(n => n.trim().toLowerCase().includes('placas'))
-    || wb.SheetNames[0];
-  const ws = wb.Sheets[wanted];
-  const table = XLSX.utils.sheet_to_json(ws, {header:1, raw:false, dateNF:'dd/mm/yyyy', defval:''});
-  return tableToRows(table);
-}
-
-function handleFile(file){
-  const name = file.name.toLowerCase();
-  const isExcel = name.endsWith('.xlsx') || name.endsWith('.xls');
-  const reader = new FileReader();
-  reader.onload = e => {
-    try{
-      const rows = isExcel ? xlsxToRows(e.target.result) : csvToRows(e.target.result);
-      if(!rows.length) throw new Error('Nenhuma linha de veículo encontrada.');
-      loadData(rows, file.name, new Date().toLocaleDateString('pt-BR'));
-      showImportStatus('ok', `${rows.length} veículos carregados de "${file.name}".`);
-      setTimeout(()=> overlay.classList.remove('open'), 900);
-    } catch(err){
-      showImportStatus('err', 'Erro ao ler o arquivo: ' + err.message);
-    }
-  };
-  reader.onerror = () => showImportStatus('err', 'Não foi possível ler o arquivo.');
-  if(isExcel) reader.readAsArrayBuffer(file);
-  else reader.readAsText(file, 'UTF-8');
-}
-
-const dropZone = document.getElementById('dropZone');
-const fileInput = document.getElementById('fileInput');
-dropZone.addEventListener('click', ()=> fileInput.click());
-fileInput.addEventListener('change', e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
-['dragenter','dragover'].forEach(evt=> dropZone.addEventListener(evt, e=>{ e.preventDefault(); dropZone.classList.add('drag'); }));
-['dragleave','drop'].forEach(evt=> dropZone.addEventListener(evt, e=>{ e.preventDefault(); dropZone.classList.remove('drag'); }));
-dropZone.addEventListener('drop', e=>{
-  const f = e.dataTransfer.files[0];
-  if(f) handleFile(f);
-});
-
-const DATA_SOURCES = [
-  { file: 'data.xlsx', kind: 'xlsx' },
-  { file: 'data.csv',  kind: 'csv'  },
-];
-
-let loadInFlight = false;
-
-function headerToast(kind, msg){
-  let el = document.getElementById('headerToast');
-  if(!el){
-    el = document.createElement('div');
-    el.id = 'headerToast';
-    el.style.cssText = 'position:fixed; top:86px; right:22px; max-width:380px; z-index:200; padding:10px 14px; border-radius:4px; font-size:12.5px; font-family:Barlow; box-shadow:0 8px 24px rgba(1,20,16,.18); transition:opacity .3s;';
-    document.body.appendChild(el);
-  }
-  const colors = {
-    ok:   {bg:'#E5F3EE', fg:'#0E6B57', bd:'#B7DDD0'},
-    err:  {bg:'#FBEAE8', fg:'#B5443A', bd:'#F0C4BF'},
-    info: {bg:'#EEF3F1', fg:'#55645D', bd:'#DCE6E2'},
-  }[kind] || {bg:'#EEF3F1', fg:'#55645D', bd:'#DCE6E2'};
-  el.style.background = colors.bg;
-  el.style.color = colors.fg;
-  el.style.border = '1px solid ' + colors.bd;
-  el.textContent = msg;
-  el.style.opacity = '1';
-  clearTimeout(el._hideTimer);
-  el._hideTimer = setTimeout(()=>{ el.style.opacity = '0'; }, 5000);
-}
-
-async function tryFetchOne(source){
-  const url = source.file + '?cachebust=' + Date.now();
-  const res = await fetch(url, { cache: 'no-store' });
-  if(!res.ok) throw new Error('HTTP ' + res.status);
-  if(source.kind === 'xlsx'){
-    const buf = await res.arrayBuffer();
-    return xlsxToRows(buf);
-  }
-  const text = await res.text();
-  const trimmed = text.trim();
-  if(!trimmed || trimmed.startsWith('<')) throw new Error('resposta inesperada');
-  return csvToRows(text);
-}
-
-async function loadFromPublishedFile(showModalStatus){
-  if(loadInFlight) return;
-  loadInFlight = true;
-  const label = document.getElementById('syncBtnLabel');
-  if(label) label.textContent = 'Carregando...';
-  let lastErr = null;
-  for(const source of DATA_SOURCES){
-    try{
-      const rows = await tryFetchOne(source);
-      if(!rows.length) throw new Error('nenhuma linha de veículo encontrada em ' + source.file);
-      loadData(rows, source.file, new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}));
-      const msg = `Carregado: ${rows.length} veículos de "${source.file}".`;
-      if(showModalStatus) showImportStatus('ok', msg); else headerToast('ok', msg);
-      loadInFlight = false;
-      if(label) label.textContent = 'Recarregar';
-      return;
-    } catch(err){
-      lastErr = err;
-    }
-  }
-  loadData(SNAPSHOT, 'demo', new Date(SNAPSHOT_DATE+'T00:00:00').toLocaleDateString('pt-BR'));
-  const msg = 'Carregado com base nos dados integrados da planilha.';
-  if(showModalStatus) showImportStatus('info', msg); else headerToast('info', msg);
-  loadInFlight = false;
-  if(label) label.textContent = 'Recarregar';
-}
-
-document.getElementById('syncNowBtn').addEventListener('click', ()=> loadFromPublishedFile(false));
-
-// ---------------- init ----------------
-loadFromPublishedFile(false);
+// Inicialização
+checkAdminAuth();
+updateAptoPreview();
+// Define data atual como padrão no campo de data de chegada
+document.getElementById('regDataChegada').value = new Date().toISOString().slice(0, 10);
+loadData();
 </script>
 </body>
 </html>
